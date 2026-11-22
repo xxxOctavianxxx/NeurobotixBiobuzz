@@ -22,8 +22,6 @@ import org.firstinspires.ftc.teamcode.subsystems.Intake;
  */
 @com.qualcomm.robotcore.eventloop.opmode.TeleOp(name = "TeleOp BIOBUZZ", group = "TeleOp")
 public class  TeleOpBiobuzz extends LinearOpMode {
-
-
     private static class RisingEdge {
         private boolean last = false;
         boolean pressed(boolean now) {
@@ -112,8 +110,7 @@ public class  TeleOpBiobuzz extends LinearOpMode {
                     target + 1, robot.shot.distance(), robot.shot.aimError());
             telemetry.addData("Gata?", "aim:%s  flywheel:%s  hood:%s",
                     robot.shot.isAimed() ? "DA" : "nu",
-                    robot.shot.flywheelReady() ? "DA" : "nu",
-                    robot.shot.hoodReady() ? "DA" : "nu");
+                    robot.shot.flywheelReady() ? "DA" : "nu");
             telemetry.addData("Ultimul rezultat", robot.shot.lastResult());
             telemetry.addData("Pre-spin (R1)", robot.shot.preSpin() ? "PORNIT" : "oprit");
 
@@ -123,7 +120,6 @@ public class  TeleOpBiobuzz extends LinearOpMode {
             telemetry.addData("Rampă (X)", "%s (%.2f)", robot.ramp.state(), robot.ramp.position());
             telemetry.addData("Flywheel", "%s   viteză reală %.0f ticks/s",
                     robot.flywheel.state(), robot.flywheel.velocity());
-            telemetry.addData("Hood", "%.3f -> %.3f", robot.hood.position(), robot.hood.target());
 
             if (robot.localizer.isAvailable()) {
                 telemetry.addData("Poziție", "X:%.1f  Y:%.1f  H:%.1f°",

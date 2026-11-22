@@ -6,7 +6,6 @@ import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.teamcode.config.RobotConfig;
 import org.firstinspires.ftc.teamcode.subsystems.Flywheel;
 import org.firstinspires.ftc.teamcode.subsystems.FlowerRamp;
-import org.firstinspires.ftc.teamcode.subsystems.Hood;
 import org.firstinspires.ftc.teamcode.subsystems.Localizer;
 import org.firstinspires.ftc.teamcode.subsystems.Transfer;
 
@@ -21,7 +20,6 @@ public class ShotController {
 
     private final Localizer localizer;
     private final Flywheel flywheel;
-    private final Hood hood;
     private final Transfer transfer;
     private final FlowerRamp ramp;
 
@@ -41,10 +39,9 @@ public class ShotController {
     private ShotTable.Params lockedParams = params;
     private String lastResult = "-";
 
-    public ShotController(Localizer localizer, Flywheel flywheel, Hood hood, Transfer transfer, FlowerRamp ramp) {
+    public ShotController(Localizer localizer, Flywheel flywheel, Transfer transfer, FlowerRamp ramp) {
         this.localizer = localizer;
         this.flywheel = flywheel;
-        this.hood = hood;
         this.transfer = transfer;
         this.ramp = ramp;
     }
@@ -90,7 +87,6 @@ public class ShotController {
     public boolean isAimed() { return aimed; }
     public boolean targetConfigured() { return targetConfigured; }
     public boolean flywheelReady() { return flywheel.isReady(); }
-    public boolean hoodReady() { return hood.isReady(); }
     public String lastResult() { return lastResult; }
 
     /** Puterea de rotire ceruta de auto-aim (+ = sens orar). */
@@ -126,7 +122,6 @@ public class ShotController {
                 turnControl = false;
                 if (preSpin) {
                     flywheel.spinUp(params.power, params.velocity);
-                    hood.setTarget(params.hood);
                     idleTimer.reset();
                 } else if (flywheel.state() != Flywheel.State.OFF
                         && idleTimer.seconds() > RobotConfig.FLYWHEEL_KEEP_ALIVE_SECONDS) {
@@ -137,10 +132,10 @@ public class ShotController {
             case PREPARING: {
                 turnControl = aimActive;
                 flywheel.spinUp(params.power, params.velocity);
-                hood.setTarget(params.hood);
+
                 if (!aimed) aimStableTimer.reset();
                 boolean aimOk = aimed && aimStableTimer.seconds() >= RobotConfig.AIM_STABLE_SECONDS;
-                if (aimOk && flywheel.isReady() && hood.isReady()) {
+                if (aimOk && flywheel.isReady()) {
                     lockedParams = params; // freeze vlaue
                     state = State.FEEDING;
                     stateTimer.reset();
@@ -153,7 +148,6 @@ public class ShotController {
             case FEEDING: {
                 turnControl = aimActive;
                 flywheel.spinUp(lockedParams.power, lockedParams.velocity);
-                hood.setTarget(lockedParams.hood);
                 if (stateTimer.seconds() >= RobotConfig.FEED_SECONDS) {
                     state = State.RECOVERING;
                     stateTimer.reset();

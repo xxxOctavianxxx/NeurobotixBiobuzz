@@ -12,21 +12,20 @@ public final class ShotTable {
     private ShotTable() {}
 
     public static final class Params {
-        public final double power, velocity, hood;
+        public final double power, velocity;
         public Params(double power, double velocity, double hood) {
             this.power = power;
             this.velocity = velocity;
-            this.hood = hood;
         }
     }
 
     // { distanță (inchi), putere flywheel (0-1), viteză flywheel (ticks/s), poziție hood }
     // Distanțele trebuie să fie în ordine crescătoare.
     private static final double[][] DATA = {
-            { 30.0, 0.60, 1200.0, 0.30},
-            { 45.0, 0.70, 1450.0, 0.40},
-            { 60.0, 0.75, 1600.0, 0.50},
-            { 90.0, 0.85, 1900.0, 0.65},
+            { 30.0, 0.60, 1200.0},
+            { 45.0, 0.70, 1450.0},
+            { 60.0, 0.75, 1600.0},
+            { 90.0, 0.85, 1900.0},
     };
 
     private static Params row(double[] r) { return new Params(r[1], r[2], r[3]); }

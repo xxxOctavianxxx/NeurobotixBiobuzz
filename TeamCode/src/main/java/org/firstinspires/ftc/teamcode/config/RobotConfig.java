@@ -108,7 +108,7 @@ public final class RobotConfig {
     public static final double  RAMP_STOWED_POS        = 0.0;  // ridiciat
     public static final double  RAMP_DEPLOYED_POS      = 0.5;  // sub bile
     public static final double  RAMP_SPEED_PER_SECOND  = 2.0;
-    public static final boolean RAMP_STOW_ON_SHOT      = true; // ridica la tragere
+    public static final boolean RAMP_STOW_ON_SHOT      = false; // ridica la tragere
 
     // =====================================================================
     // SECVENȚA DE TRAGERE

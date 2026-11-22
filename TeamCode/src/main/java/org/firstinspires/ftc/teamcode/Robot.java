@@ -6,7 +6,6 @@ import org.firstinspires.ftc.teamcode.control.ShotController;
 import org.firstinspires.ftc.teamcode.subsystems.Drivetrain;
 import org.firstinspires.ftc.teamcode.subsystems.FlowerRamp;
 import org.firstinspires.ftc.teamcode.subsystems.Flywheel;
-import org.firstinspires.ftc.teamcode.subsystems.Hood;
 import org.firstinspires.ftc.teamcode.subsystems.Intake;
 import org.firstinspires.ftc.teamcode.subsystems.Localizer;
 import org.firstinspires.ftc.teamcode.subsystems.Transfer;
@@ -18,7 +17,6 @@ public class Robot {
     public final Intake intake;
     public final Transfer transfer;
     public final Flywheel flywheel;
-    public final Hood hood;
     public final FlowerRamp ramp;
     public final ShotController shot;
 
@@ -28,9 +26,8 @@ public class Robot {
         intake     = new Intake(hw);
         transfer   = new Transfer(hw);
         flywheel   = new Flywheel(hw);
-        hood       = new Hood(hw);
         ramp       = new FlowerRamp(hw);
-        shot       = new ShotController(localizer, flywheel, hood, transfer, ramp);
+        shot       = new ShotController(localizer, flywheel, transfer, ramp);
     }
 
     public void update() {
@@ -40,7 +37,6 @@ public class Robot {
         intake.update();
         transfer.update();
         flywheel.update();
-        hood.update();
         ramp.update();
     }
 }
