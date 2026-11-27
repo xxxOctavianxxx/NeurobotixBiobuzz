@@ -7,66 +7,70 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.teamcode.config.RobotConfig;
 
-/**
- * Flywheel: state machine OFF -> SPINNING_UP -> READY.
- * Mod putere (implicit): READY după FLYWHEEL_SPINUP_SECONDS.
- * Mod viteză (FLYWHEEL_USE_VELOCITY): READY când viteza reală e în toleranță un timp.
- */
+/** Flywheel pe viteza reala: feedforward + PID. Nu se opreste niciodata, merge la viteza de repaus. */
 public class Flywheel {
-    public enum State { OFF, SPINNING_UP, READY }
+    public enum State { SPINNING_UP, READY }
 
     private final DcMotorEx motor;
-    private State state = State.OFF;
-    private double targetPower = 0.0, targetVelocity = 0.0, refPower = 0.0;
-    private final ElapsedTime spinTimer = new ElapsedTime();
+    private State state = State.SPINNING_UP;
+    private double targetVelocity = RobotConfig.FLYWHEEL_IDLE_VELOCITY;
+    private double integral = 0.0;
+    private double lastError = 0.0;
+    private final ElapsedTime loopTimer = new ElapsedTime();
     private final ElapsedTime stableTimer = new ElapsedTime();
 
     public Flywheel(HardwareMap hw) {
         motor = hw.get(DcMotorEx.class, RobotConfig.FLYWHEEL);
         motor.setDirection(RobotConfig.dir(RobotConfig.FLYWHEEL_REVERSED));
-        motor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT); // se oprește lin
-        motor.setMode(RobotConfig.FLYWHEEL_USE_VELOCITY
-                ? DcMotor.RunMode.RUN_USING_ENCODER
-                : DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        motor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
+        motor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        loopTimer.reset();
+        stableTimer.reset();
     }
 
-    /** porneste / menține flywheelu la ținta. daca tinta se schimba ff mult, restabilizeaza. */
-    public void spinUp(double power, double velocity) {
-        targetPower = power;
+    /** Cere o viteza (ticks/s). Daca se schimba mult, restabilizeaza. */
+    public void spinUp(double velocity) {
+        boolean changed = Math.abs(velocity - targetVelocity) > RobotConfig.FLYWHEEL_RETARGET_TOLERANCE;
         targetVelocity = velocity;
-        boolean changed = Math.abs(power - refPower) > RobotConfig.FLYWHEEL_RETARGET_POWER_DELTA;
-        if (state == State.OFF || changed) {
+        if (changed) {
             state = State.SPINNING_UP;
-            refPower = power;
-            spinTimer.reset();
             stableTimer.reset();
         }
     }
 
-    public void stop() { state = State.OFF; }
     public State state() { return state; }
     public boolean isReady() { return state == State.READY; }
     public double velocity() { return motor.getVelocity(); }
 
     public void update() {
-        if (state == State.OFF) {
-            motor.setPower(0.0);
-            return;
+        double dt = loopTimer.seconds();
+        loopTimer.reset();
+
+        double error = targetVelocity - motor.getVelocity();
+
+        integral += error * dt;
+        if (RobotConfig.FLYWHEEL_KI > 0) {
+            double iMax = RobotConfig.FLYWHEEL_I_MAX / RobotConfig.FLYWHEEL_KI;
+            integral = Math.max(-iMax, Math.min(iMax, integral));
         }
-        if (RobotConfig.FLYWHEEL_USE_VELOCITY) {
-            motor.setVelocity(targetVelocity);
-            double error = Math.abs(motor.getVelocity() - targetVelocity);
-            if (error > RobotConfig.FLYWHEEL_VELOCITY_TOLERANCE) {
-                stableTimer.reset();
-                if (error > RobotConfig.FLYWHEEL_VELOCITY_TOLERANCE * 2) state = State.SPINNING_UP;
-            } else if (state == State.SPINNING_UP
-                    && stableTimer.seconds() >= RobotConfig.FLYWHEEL_STABLE_SECONDS) {
+        double derivative = dt > 0 ? (error - lastError) / dt : 0.0;
+        lastError = error;
+
+        double output = RobotConfig.FLYWHEEL_KF * targetVelocity
+                + RobotConfig.FLYWHEEL_KP * error
+                + RobotConfig.FLYWHEEL_KI * integral
+                + RobotConfig.FLYWHEEL_KD * derivative;
+        output = Math.max(0.0, Math.min(1.0, output));
+        motor.setPower(output);
+
+        if (Math.abs(error) <= RobotConfig.FLYWHEEL_VELOCITY_TOLERANCE) {
+            if (state == State.SPINNING_UP && stableTimer.seconds() >= RobotConfig.FLYWHEEL_STABLE_SECONDS) {
                 state = State.READY;
             }
         } else {
-            motor.setPower(targetPower);
-            if (state == State.SPINNING_UP && spinTimer.seconds() >= RobotConfig.FLYWHEEL_SPINUP_SECONDS) {
-                state = State.READY;
+            stableTimer.reset();
+            if (state == State.READY && Math.abs(error) > 2 * RobotConfig.FLYWHEEL_VELOCITY_TOLERANCE) {
+                state = State.SPINNING_UP;
             }
         }
     }

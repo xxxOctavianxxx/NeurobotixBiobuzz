@@ -1,47 +1,38 @@
 package org.firstinspires.ftc.teamcode.control;
 
 /**
- * Tabel de tragere: pentru fiecare distanță până la țintă, ce putere/viteză de flywheel
- * și ce poziție de hood intră mingea. Între rânduri se interpolează liniar.
+ * Tabel de tragere: pentru fiecare distanta (INCH) pana la tinta, viteza flywheel-ului (ticks/s).
+ * Intre randuri se interpoleaza liniar.
  *
- * !!! VALORILE DE MAI JOS SUNT BULLSHIT, NU SUNT MĂSURATE !!!
- *
- * (putere sau viteză + hood) nimerește. Apoi pui RobotConfig.SHOT_TABLE_CALIBRATED = true.
+ * Dupa calibrare, pune RobotConfig.SHOT_TABLE_CALIBRATED = true.
  */
 public final class ShotTable {
     private ShotTable() {}
 
     public static final class Params {
-        public final double power, velocity;
-        public Params(double power, double velocity, double hood) {
-            this.power = power;
-            this.velocity = velocity;
-        }
+        public final double velocity;
+        public Params(double velocity) { this.velocity = velocity; }
     }
 
-    // { distanță (inchi), putere flywheel (0-1), viteză flywheel (ticks/s), poziție hood }
-    // Distanțele trebuie să fie în ordine crescătoare.
+    // { distanta (INCH), viteza flywheel (ticks/s) }. Distantele in ordine crescatoare.
     private static final double[][] DATA = {
-            { 30.0, 0.60, 1200.0},
-            { 45.0, 0.70, 1450.0},
-            { 60.0, 0.75, 1600.0},
-            { 90.0, 0.85, 1900.0},
+            { 31.5, 2750.0 },   // ~80 cm
+            { 47.2, 3350.0 },   // ~120 cm
+            { 59.1, 3550.0 },   // ~150 cm
+            { 90.6, 4000.0 },   // ~230 cm
     };
 
-    private static Params row(double[] r) { return new Params(r[1], r[2], r[3]); }
-    private static double lerp(double a, double b, double t) { return a + (b - a) * t; }
-
-    public static Params lookup(double distance) {
+    public static Params lookup(double distanceIn) {
         int last = DATA.length - 1;
-        if (distance <= DATA[0][0]) return row(DATA[0]);
-        if (distance >= DATA[last][0]) return row(DATA[last]);
+        if (distanceIn <= DATA[0][0]) return new Params(DATA[0][1]);
+        if (distanceIn >= DATA[last][0]) return new Params(DATA[last][1]);
         for (int i = 0; i < last; i++) {
             double[] a = DATA[i], b = DATA[i + 1];
-            if (distance <= b[0]) {
-                double t = (distance - a[0]) / (b[0] - a[0]);
-                return new Params(lerp(a[1], b[1], t), lerp(a[2], b[2], t), lerp(a[3], b[3], t));
+            if (distanceIn <= b[0]) {
+                double t = (distanceIn - a[0]) / (b[0] - a[0]);
+                return new Params(a[1] + (b[1] - a[1]) * t);
             }
         }
-        return row(DATA[last]);
+        return new Params(DATA[last][1]);
     }
 }

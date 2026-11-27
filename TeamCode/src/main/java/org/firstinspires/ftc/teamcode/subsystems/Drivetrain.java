@@ -35,8 +35,14 @@ public class Drivetrain {
         double frontRight = (forward - x - turn) / denominator;
         double backRight  = (forward + x - turn) / denominator;
 
+        frontLeft  *= RobotConfig.LEFT_TRIM;
+        backLeft   *= RobotConfig.LEFT_TRIM;
+        frontRight *= RobotConfig.RIGHT_TRIM;
+        backRight  *= RobotConfig.RIGHT_TRIM;
+
         lf.setPower(frontLeft);
         lb.setPower(backLeft);
+
         if (RobotConfig.RIGHT_SIDE_FRONT_BACK_SWAPPED) {
             rf.setPower(backRight);
             rb.setPower(frontRight);

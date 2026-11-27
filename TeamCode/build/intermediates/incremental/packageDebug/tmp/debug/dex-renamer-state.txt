@@ -1,17 +1,17 @@
-#Sun Nov 22 13:20:36 EET 2026
-base.0=C\:\\Users\\Nic\\StudioProjects\\NeurobotixBiobuzz\\TeamCode\\build\\intermediates\\dex\\debug\\mergeExtDexDebug\\classes.dex
-base.1=C\:\\Users\\Nic\\StudioProjects\\NeurobotixBiobuzz\\TeamCode\\build\\intermediates\\dex\\debug\\mergeLibDexDebug\\10\\classes.dex
-base.10=C\:\\Users\\Nic\\StudioProjects\\NeurobotixBiobuzz\\TeamCode\\build\\intermediates\\dex\\debug\\mergeProjectDexDebug\\15\\classes.dex
-base.11=C\:\\Users\\Nic\\StudioProjects\\NeurobotixBiobuzz\\TeamCode\\build\\intermediates\\dex\\debug\\mergeProjectDexDebug\\1\\classes.dex
-base.12=C\:\\Users\\Nic\\StudioProjects\\NeurobotixBiobuzz\\TeamCode\\build\\intermediates\\dex\\debug\\mergeExtDexDebug\\classes2.dex
-base.2=C\:\\Users\\Nic\\StudioProjects\\NeurobotixBiobuzz\\TeamCode\\build\\intermediates\\dex\\debug\\mergeLibDexDebug\\11\\classes.dex
-base.3=C\:\\Users\\Nic\\StudioProjects\\NeurobotixBiobuzz\\TeamCode\\build\\intermediates\\dex\\debug\\mergeLibDexDebug\\14\\classes.dex
-base.4=C\:\\Users\\Nic\\StudioProjects\\NeurobotixBiobuzz\\TeamCode\\build\\intermediates\\dex\\debug\\mergeLibDexDebug\\7\\classes.dex
-base.5=C\:\\Users\\Nic\\StudioProjects\\NeurobotixBiobuzz\\TeamCode\\build\\intermediates\\dex\\debug\\mergeLibDexDebug\\8\\classes.dex
-base.6=C\:\\Users\\Nic\\StudioProjects\\NeurobotixBiobuzz\\TeamCode\\build\\intermediates\\dex\\debug\\mergeProjectDexDebug\\0\\classes.dex
-base.7=C\:\\Users\\Nic\\StudioProjects\\NeurobotixBiobuzz\\TeamCode\\build\\intermediates\\dex\\debug\\mergeProjectDexDebug\\12\\classes.dex
-base.8=C\:\\Users\\Nic\\StudioProjects\\NeurobotixBiobuzz\\TeamCode\\build\\intermediates\\dex\\debug\\mergeProjectDexDebug\\13\\classes.dex
-base.9=C\:\\Users\\Nic\\StudioProjects\\NeurobotixBiobuzz\\TeamCode\\build\\intermediates\\dex\\debug\\mergeProjectDexDebug\\14\\classes.dex
+#Fri Nov 27 14:06:26 EET 2026
+base.0=C\:\\Users\\dumit\\Desktop\\baiobaz\\FtcRobotController-master\\TeamCode\\build\\intermediates\\dex\\debug\\mergeExtDexDebug\\classes.dex
+base.1=C\:\\Users\\dumit\\Desktop\\baiobaz\\FtcRobotController-master\\TeamCode\\build\\intermediates\\dex\\debug\\mergeLibDexDebug\\10\\classes.dex
+base.10=C\:\\Users\\dumit\\Desktop\\baiobaz\\FtcRobotController-master\\TeamCode\\build\\intermediates\\dex\\debug\\mergeProjectDexDebug\\15\\classes.dex
+base.11=C\:\\Users\\dumit\\Desktop\\baiobaz\\FtcRobotController-master\\TeamCode\\build\\intermediates\\dex\\debug\\mergeProjectDexDebug\\1\\classes.dex
+base.12=C\:\\Users\\dumit\\Desktop\\baiobaz\\FtcRobotController-master\\TeamCode\\build\\intermediates\\dex\\debug\\mergeExtDexDebug\\classes2.dex
+base.2=C\:\\Users\\dumit\\Desktop\\baiobaz\\FtcRobotController-master\\TeamCode\\build\\intermediates\\dex\\debug\\mergeLibDexDebug\\11\\classes.dex
+base.3=C\:\\Users\\dumit\\Desktop\\baiobaz\\FtcRobotController-master\\TeamCode\\build\\intermediates\\dex\\debug\\mergeLibDexDebug\\14\\classes.dex
+base.4=C\:\\Users\\dumit\\Desktop\\baiobaz\\FtcRobotController-master\\TeamCode\\build\\intermediates\\dex\\debug\\mergeLibDexDebug\\7\\classes.dex
+base.5=C\:\\Users\\dumit\\Desktop\\baiobaz\\FtcRobotController-master\\TeamCode\\build\\intermediates\\dex\\debug\\mergeLibDexDebug\\8\\classes.dex
+base.6=C\:\\Users\\dumit\\Desktop\\baiobaz\\FtcRobotController-master\\TeamCode\\build\\intermediates\\dex\\debug\\mergeProjectDexDebug\\0\\classes.dex
+base.7=C\:\\Users\\dumit\\Desktop\\baiobaz\\FtcRobotController-master\\TeamCode\\build\\intermediates\\dex\\debug\\mergeProjectDexDebug\\12\\classes.dex
+base.8=C\:\\Users\\dumit\\Desktop\\baiobaz\\FtcRobotController-master\\TeamCode\\build\\intermediates\\dex\\debug\\mergeProjectDexDebug\\13\\classes.dex
+base.9=C\:\\Users\\dumit\\Desktop\\baiobaz\\FtcRobotController-master\\TeamCode\\build\\intermediates\\dex\\debug\\mergeProjectDexDebug\\14\\classes.dex
 path.0=classes.dex
 path.1=10/classes.dex
 path.10=15/classes.dex
